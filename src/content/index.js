@@ -1,4 +1,5 @@
 import '../console/console-frame.scss';
+import * as clipboards from './clipboards';
 import * as consoleFrames from '../console/frames';
 import * as scrolls from '../content/scrolls';
 import * as navigates from '../content/navigates';
@@ -44,6 +45,11 @@ window.addEventListener('keypress', (e) => {
   if (e.target instanceof HTMLInputElement) {
     return;
   }
+
+  if (e.key === 'y') {
+    clipboards.copyLocation(window.document);
+  }
+
   browser.runtime.sendMessage({
     type: messages.KEYDOWN,
     code: e.which,
@@ -100,3 +106,5 @@ browser.runtime.onMessage.addListener((action) => {
     return Promise.resolve();
   }
 });
+
+clipboards.init(window.document);
